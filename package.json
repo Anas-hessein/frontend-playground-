@@ -1,0 +1,27 @@
+{
+    "name": "FrontendPlayground",
+    "displayName": "Frontend Playground",
+    "publisher": "Anaskiiled",
+    "version": "1.0.0",
+    "engines": {
+        "vscode": "^1.80.0"
+    },
+    "activationEvents": [
+        "onCommand:playground.open"
+    ],
+    "main": "./extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "playground.open",
+                "title": "Open Frontend Playground"
+            }
+        ]
+    },
+    "scripts": {
+        "start": "node ./extension.js"
+    },
+    "dependencies": {
+        "jszip": "^3.10.1"
+    }
+}
