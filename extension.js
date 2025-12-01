@@ -128,14 +128,11 @@ function getHtml(webview,context) {
                         <button class="tab active" data-tab="html">HTML</button>
                         <button class="tab" data-tab="css">CSS</button>
                         <button class="tab" data-tab="js">JS</button>
-                        <button class="tab" data-tab="jsx">JSX</button>
                         <button id="exportBtn">Export ZIP</button>
                         <button id="importBtn">Import ZIP</button>
                     </div>
 
                     <div class="libs">
-                        <button class= "lib-btn" data-lib="react">React</button>
-                        <button class= "lib-btn" data-lib="vue">Vue</button>
                         <button class= "lib-btn" data-lib="tailwind">Tailwind css</button>
                     </div>
 

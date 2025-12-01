@@ -113,6 +113,7 @@ window.addEventListener("message", (event) => {
   }
 })
 
+
 window.addEventListener("message", (event) => {
   let msg = event.data
 
@@ -121,17 +122,18 @@ window.addEventListener("message", (event) => {
     let consoleDiv = document.getElementById("console")
     consoleDiv.innerHTML = ''
      
-    let reactCDN = `<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-                    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>`
-    
-    let babelCDN = `<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>`
+    let libTags = ""
+    for (let lib in msg.libs) {
+      if (msg.libs[lib]) {
+        libTags += libraries[lib]
+      }
+    }
     
     iframe.srcdoc = `
                     <!DOCTYPE html>
                     <html>
                     <head>
-                          ${reactCDN}
-                          ${babelCDN}
+                          ${libTags}
                           <style>
                           ${msg.css}
                           </style>
@@ -139,29 +141,30 @@ window.addEventListener("message", (event) => {
                     <body>
                           ${msg.html}
 
-                          <div id="iframeConsole" style="display:none;"></div>
-
                           <script>
-
+                          // Capture console.log
                           const consoleDiv = parent.document.getElementById('console')
-                          consoleDiv.innerHTML = ''
-
+                          
                           const oldLog = console.log
                           console.log = function(...args) {
                             oldLog(...args)
                             consoleDiv.innerHTML += args.join(' ') + "<br>"
-                            }
+                          }
                           
-                            window.onerror = function(message, source, lineno, colno, error) {
-                              consoleDiv.innerHTML += "<span style='color:red;'> ERROR: " + message + "</span><br>"
-                            }
-                            
+                          // Capture errors
+                          window.onerror = function(message, source, lineno, colno, error) {
+                            consoleDiv.innerHTML += "<span style='color:red;'>ERROR: " + message + "</span><br>"
+                            return true
+                          }
+                          
+                          // Wait for libraries to load before running user code
+                          window.addEventListener('load', () => {
                             try {
-                                ${msg.js}
+                              ${msg.js}
                             } catch (e) {
                               consoleDiv.innerHTML += "<span style='color:red'>" + e + "</span><br>"
                             }
-                              
+                          })
                           </script>
                     </body>
                     </html>
