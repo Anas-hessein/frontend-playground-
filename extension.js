@@ -25,7 +25,8 @@ function activate(context) {
                     type: "preview",
                     html: msg.html,
                     css: msg.css,
-                    js: msg.js
+                    js: msg.js,
+                    libs: msg.libs
                 })
             }
             if (msg.type === "export") {
