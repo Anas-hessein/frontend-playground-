@@ -72,13 +72,15 @@ document.querySelectorAll(".lib-btn").forEach(btn => {
       btn.disabled = true
       btn.style.opacity = "0.5"
 
-      vscode.postMessage({
-        type: "run",
-        html: htmlCode,
-        css: cssCode,
-        js: jsCode,
-        libs: enabledLibs
-      })
+      setTimeout(() => {
+        vscode.postMessage({
+          type: "run",
+          html: htmlCode,
+          css: cssCode,
+          js: jsCode,
+          libs: enabledLibs
+        })
+      }, 300)
     }
   })
 })
@@ -142,7 +144,7 @@ window.addEventListener("message", (event) => {
                           ${msg.html}
 
                           <script>
-                          // Capture console.log
+
                           const consoleDiv = parent.document.getElementById('console')
                           
                           const oldLog = console.log
@@ -151,13 +153,11 @@ window.addEventListener("message", (event) => {
                             consoleDiv.innerHTML += args.join(' ') + "<br>"
                           }
                           
-                          // Capture errors
                           window.onerror = function(message, source, lineno, colno, error) {
                             consoleDiv.innerHTML += "<span style='color:red;'>ERROR: " + message + "</span><br>"
                             return true
                           }
                           
-                          // Wait for libraries to load before running user code
                           window.addEventListener('load', () => {
                             try {
                               ${msg.js}
