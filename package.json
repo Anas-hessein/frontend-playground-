@@ -23,5 +23,9 @@
     },
     "dependencies": {
         "jszip": "^3.10.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Anas-hessein/frontend-playground-"
     }
 }
